@@ -1,11 +1,13 @@
 import GHC.Base (Bool (False))
 import Text.ParserCombinators.Parsec.Combinator (chainl)
 
--- 2 data constructors
-data Chain
-  = GenesisBlock
+-- Chain, Bool, Txs, Int: data type
+-- GenesisBlock, Block: 2 data constructors
+data Chain = 
+    GenesisBlock
   | Block Chain Txs
 
+-- Txs: data type
 type Txs = Int
 
 chain1 :: Chain
@@ -32,6 +34,12 @@ hasBlockProp :: (Txs -> Bool) -> Chain -> Bool
 hasBlockProp prop GenesisBlock = False
 hasBlockProp prop (Block c t) = prop t || hasBlockProp prop c
 -- hasBlockProp (\x -> x > 3) chain2
+-- hasBlockProp         (> 3) chain2
+
+-- type-directed programming
+-- functions follow the structure of the data!
+
+
 
 
 --
