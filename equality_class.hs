@@ -1,3 +1,20 @@
+-- Eq: equality class (constraint)
+-- additional constraint for what can be a
+
+-- :t (==)
+-- (==) :: Eq a => a -> a -> Bool
+
+hasBlock :: Eq txs => txs -> Chain txs -> Bool
+hasBlock x GenesisBlock = False
+hasBlock x (Block c t) = 
+  x == t || hasBlock x c
+
+-- chain3 :: Chain ??
+chain3 = 
+  Block GenesisBlock "test"
+-- hasBlock "test" chain3
+
+-- from Poly_chains
 
 -- abstract from type of tx
 -- Chain: parameterised data type 
@@ -18,16 +35,5 @@ chain2 :: Chain Int
 chain2 =
   Block chain1 4
 
--- the same; no interaction with t
-chainLength :: Chain txs -> Int
-chainLength GenesisBlock = 0
-chainLength (Block c _) = chainLength c + 1
 
-hasBlockProp :: (txs -> Bool) -> Chain txs -> Bool
-hasBlockProp prop GenesisBlock = False
-hasBlockProp prop (Block c t) = prop t || hasBlockProp prop c
--- works for any choice of type txs!
-
-
---
 

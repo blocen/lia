@@ -26,7 +26,8 @@ chainLength (Block c _) = chainLength c + 1
 --
 hasBlock :: Txs -> Chain -> Bool
 hasBlock x GenesisBlock = False
-hasBlock x (Block c t) = x == t || hasBlock x c
+hasBlock x (Block c t) = 
+  x == t || hasBlock x c
 
 -- model a property as function of type Txs -> Bool
 -- higher order func: a f is parameterised by another f
