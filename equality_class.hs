@@ -9,7 +9,7 @@ hasBlock x GenesisBlock = False
 hasBlock x (Block c t) = 
   x == t || hasBlock x c
 
--- chain3 :: Chain ??
+chain3 :: Chain [Char]
 chain3 = 
   Block GenesisBlock "test"
 -- hasBlock "test" chain3
@@ -22,10 +22,21 @@ chain3 =
 data Chain txs =
     GenesisBlock
   | Block (Chain txs) txs
+  deriving (Eq, Show)
+  -- deriving (Eq, Show, Foldable)
 
 -- polymorphic functions/data constructors
 -- GenesisBlock :: Chain txs
--- Block :: Chain txs -> txs -> Chain txs
+-- Block        :: Chain txs -> txs -> Chain txs
+
+-- similar for lists; which grow to the left
+-- []           :: [a]
+-- "cons" for constructor
+-- (:)          :: a -> [a] -> [a]
+l :: [Int]
+l = 2 : (1 : [])
+m :: [Int]
+m = [2,1]
 
 chain1 :: Chain Int
 chain1 =
