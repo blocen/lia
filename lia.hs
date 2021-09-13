@@ -6,6 +6,7 @@ import Text.ParserCombinators.Parsec.Combinator (chainl)
 data Chain = 
     GenesisBlock
   | Block Chain Txs
+  deriving (Eq, Show)
 
 -- Txs: data type
 type Txs = Int
@@ -17,6 +18,10 @@ chain1 =
 chain2 :: Chain
 chain2 =
   Block chain1 4
+
+-- c = Block GenesisBlock 12
+-- cc = Block c 23
+-- et c3 = Block cc 123
 
 -- type signature
 chainLength :: Chain -> Int
