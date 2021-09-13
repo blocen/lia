@@ -19,10 +19,18 @@ type Account = String
 -- trTo :: Transaction -> Account
 -- trTo (Transaction _ _ t) = t
 
+-- record syntax
 data Transaction = Transaction
   { trAmount :: Amount
   , trFrom   :: Account
   , trTo     :: Account
   }
   deriving (Eq, Show)
+
+-- t2 = Transaction {trAmount = 123, trFrom = "f", trTo = "t"}
+-- let tx = Transaction {trAmount = 123, trFrom = "f", trTo = "t"}
+
+-- record update syntax
+-- tx {trAmount =777}
+
 
