@@ -32,15 +32,32 @@ is_increasing _ = True
 --         then no_vowels (tail word)
 --         else (head word) : no_vowels (tail word)
 
+-- no_vowels :: [Char] -> [Char]
+-- no_vowels "" = ""
+-- no_vowels (x:xs) =
+--   if x `elem` "aeiouAEIOU"
+--     then no_vowels xs
+--     else x : no_vowels xs
+
+
 no_vowels :: [Char] -> [Char]
 no_vowels "" = ""
-no_vowels (x:xs) =
-  if x `elem` "aeiouAEIOU"
-    then no_vowels xs
-    else x : no_vowels xs
+no_vowels (x:xs)
+  | x `elem` "aeiouAEIOU" = no_vowels xs
+  | otherwise             = x : no_vowels xs
 
+-- watch :: Int -> [Char]
+-- watch n =
+--   if n == 7
+--     then "7 o'clock..."
+--     else show n ++ " o'clock and all is well."
 
+-- watch :: Int -> [Char]
+-- watch 7 = "7 o'clock..."
+-- watch n = show n ++ " o'clock and all is well."
 
-
-
+watch :: Int -> [Char]
+watch n = show n ++ " o'clock and " ++ m n
+  where m 7 = "..."
+        m _ = "all is well"
 
