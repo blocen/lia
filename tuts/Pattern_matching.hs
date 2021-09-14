@@ -22,3 +22,25 @@ is_increasing _ = True
 
 
 
+
+-- no_vowels :: [Char] -> [Char]
+-- no_vowels word = 
+--   if word == ""
+--     then ""
+--     else
+--       if head word `elem` "aeiouAEIOU"
+--         then no_vowels (tail word)
+--         else (head word) : no_vowels (tail word)
+
+no_vowels :: [Char] -> [Char]
+no_vowels "" = ""
+no_vowels (x:xs) =
+  if x `elem` "aeiouAEIOU"
+    then no_vowels xs
+    else x : no_vowels xs
+
+
+
+
+
+
