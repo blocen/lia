@@ -1,6 +1,3 @@
-import GHC.Base (Bool (False))
-import Text.ParserCombinators.Parsec.Combinator (chainl)
-
 -- Chain, Bool, Txs, Int: data type
 -- GenesisBlock, Block: 2 data constructors
 data Chain = 
@@ -30,14 +27,14 @@ chainLength (Block c _) = chainLength c + 1
 
 --
 hasBlock :: Txs -> Chain -> Bool
-hasBlock x GenesisBlock = False
+hasBlock _ GenesisBlock = False
 hasBlock x (Block c t) = 
   x == t || hasBlock x c
 
 -- model a property as function of type Txs -> Bool
 -- higher order func: a f is parameterised by another f
 hasBlockProp :: (Txs -> Bool) -> Chain -> Bool
-hasBlockProp prop GenesisBlock = False
+hasBlockProp _ GenesisBlock = False
 hasBlockProp prop (Block c t) = prop t || hasBlockProp prop c
 -- hasBlockProp (\x -> x > 3) chain2
 -- hasBlockProp         (> 3) chain2
