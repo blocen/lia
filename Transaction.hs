@@ -1,3 +1,4 @@
+module Transaction where
 
 type Amount  = Int
 type Account = String
@@ -31,6 +32,4 @@ data Transaction = Transaction
 -- let tx = Transaction {trAmount = 123, trFrom = "f", trTo = "t"}
 
 -- record update syntax
--- tx {trAmount =777}
-
-
+-- tx {trAmount = 777}
