@@ -1,4 +1,4 @@
-module Data_types where
+module Data_types_Maybe where
 
 import    Prelude hiding (Maybe (..))
 
