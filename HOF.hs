@@ -47,7 +47,15 @@ flip f x y = f y x
 -- fun cons nil (x: xs) = cons x (fun cons nil xs)
 
 -- short names:
+-- foldr :: ( a -> r -> r) -> r -> [a] -> r
+-- foldr cons nil []  = nil
+-- foldr cons nil (x: xs) = cons x (HOF.foldr cons nil xs)
+
+-- go where pattern
 foldr :: ( a -> r -> r) -> r -> [a] -> r
-foldr cons nil []  = nil
-foldr cons nil (x: xs) = cons x (HOF.foldr cons nil xs)
+foldr cons nil = go
+  where
+    go []      = nil
+    go (x: xs) = cons x (go xs)
+
 
