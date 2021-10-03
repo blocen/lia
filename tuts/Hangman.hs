@@ -2,7 +2,13 @@ module Hangman where
 
 import System.IO
 import System.Random
+import Data.Array.IO.Safe (Ix(inRange))
 
+-- todos
+-- System.Random?
+-- start col
+-- bring on
+-- real r
 
 main :: IO ()
 main = do
@@ -13,27 +19,44 @@ main = do
   handle <- openFile "en1.txt" ReadMode   
   contents <- hGetContents handle
 
-  gen <- getStdGen
+  -- input validation
+  putStrLn "How many guesses: (6-9)"
+  input <- getLine
+  let guesses = read input :: Int
   let words = map init (lines contents)
-      (n, _) = randomR (0, length words - 1) gen :: (Int, StdGen)
-      word = words !! n
-      -- putStrLn "n: " 
+  let ok = inRange (0, length words - 1) guesses
+  -- if not ok... Maybe Int
 
-  play word (map (\x -> '_') word)
+  -- gen <- getStdGen
+  gen <- newStdGen -- new seeds
+  let (n, _) = randomR (0, length words - 1) gen :: (Int, StdGen)
+  let word = words !! n
+  putStrLn ("number: " ++ show n ++ " is word: " ++ word)
+  putStrLn ("guesses: " ++ show guesses)
+
+  play word (map (\x -> '_') word) guesses
   -- putStrLn ("there are " ++ show ( length (lines contents)) ++ " words.")
   hClose handle
 
-play :: [Char] -> [Char] -> IO ()
-play word known = do
+play :: [Char] -> [Char] -> Int -> IO ()
+play word known guesses
   -- putStrLn ("The word is " ++ word ++ ".")
-  putStrLn known
-  putStrLn "Enter a letter to guess: "
-  line <- getLine
-  play word (handle (head line) word known) -- head NOT for empty lists
+  | word == known = do
+                    putStrLn known
+                    putStrLn "Winner!!"
+  | guesses == 0  = do
+                    putStrLn known
+                    putStrLn ("Game over! The word was " ++ word ++ ".")
+  | otherwise     = do
+                    putStrLn known
+                    putStrLn ("You have " ++ show guesses ++ " guesses left.")
+                    line <- getLine
+                    let (newKnown, newGuesses) = handle (head line) word known guesses
+                    play word newKnown newGuesses -- head NOT for empty lists
 
 -- regular pure haskell function!
-handle :: Char -> [Char] -> [Char] -> [Char]
-handle letter word known
-  | letter `elem` word = zipWith (\w k -> if w == letter then w else k) word known
-  | otherwise          = known
+handle :: Char -> [Char] -> [Char] -> Int -> ([Char], Int)
+handle letter word known guesses
+  | letter `elem` word = (zipWith (\w k -> if w == letter then w else k) word known, guesses)
+  | otherwise          = (known, guesses - 1)
 
