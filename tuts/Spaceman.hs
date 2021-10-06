@@ -1,3 +1,4 @@
+{-# LANGUAGE LambdaCase #-}
 module Spaceman where
 
 import System.IO
@@ -23,9 +24,11 @@ main = do
   contents <- hGetContents handle
 
   -- how to multi line strings
-  putStrLn "**********************\n\
-           \welcome to spaceman!\n\
-           \**********************"
+  putStrLn "\n\
+           \**********************\n\
+           \ welcome to spaceman!\n\
+           \**********************\n\
+           \"
   putStrLn "how many guesses: (6-9)"
   -- input validation
   input <- getLine
@@ -51,12 +54,12 @@ main = do
 
       play word (map (\x -> '_') word) guesses
       -- putStrLn ("there are " ++ show ( length (lines contents)) ++ " words.")
-      hClose handle
-
-getRandomNr :: Int -> IO Int
--- getRandomNr lc = getStdRandom (randomR (0, lc - 1))
-getRandomNr lc = do
-  randomRIO (0, lc - 1)
+      
+      putStrLn "play again? (y/n)"
+      getLine >>= \case -- lamda case
+        "y" -> hFlush stdout >> main
+        otherwise -> putStrLn "see you next time."
+        -- hClose handle
 
 play :: [Char] -> [Char] -> Int -> IO ()
 play word known guesses
@@ -80,3 +83,7 @@ handle letter word known guesses
   | letter `elem` word = (zipWith (\w k -> if w == letter then w else k) word known, guesses)
   | otherwise          = (known, guesses - 1)
 
+getRandomNr :: Int -> IO Int
+-- getRandomNr lc = getStdRandom (randomR (0, lc - 1))
+getRandomNr lc = do
+  randomRIO (0, lc - 1)
