@@ -26,10 +26,10 @@ main = do
   -- how to multi line strings
   putStrLn "\n\
            \**********************\n\
-           \ welcome to spaceman!\n\
+           \ Welcome to Spaceman!\n\
            \**********************\n\
            \"
-  putStrLn "how many guesses: (6-9)"
+  putStrLn "How many guesses: (6-9)"
   -- input validation
   input <- getLine
   let guesses = read input :: Int
@@ -40,7 +40,7 @@ main = do
   -- if not ok... Maybe Int
   case ok of
     -- todo: cheap!
-    False     -> putStrLn "try again, how many guesses: (6-9)"
+    False     -> putStrLn "Try again, how many guesses: (6-9)"
     otherwise -> do
 
       -- gen <- getStdGen
@@ -49,16 +49,16 @@ main = do
       -- let lc = length words - 1
       -- let n = getRandomNr lc 
       let word = words !! n
-      putStrLn ("number: " ++ show n ++ " is word: " ++ word)
-      putStrLn ("guesses: " ++ show guesses)
+      -- putStrLn ("number: " ++ show n ++ " is word: " ++ word)
+      putStrLn ("n: " ++ show n ++ " / guesses: " ++ show guesses)
+      putStrLn ("There are " ++ show ( length (lines contents)) ++ " words in the game.")
 
       play word (map (\x -> '_') word) guesses
-      -- putStrLn ("there are " ++ show ( length (lines contents)) ++ " words.")
       
-      putStrLn "play again? (y/n)"
+      putStrLn "Play again? (y/n)"
       getLine >>= \case -- lamda case
         "y" -> hFlush stdout >> main
-        otherwise -> putStrLn "see you next time."
+        otherwise -> putStrLn "See you next time."
         -- hClose handle
 
 play :: [Char] -> [Char] -> Int -> IO ()

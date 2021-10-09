@@ -561,6 +561,7 @@ newSize = areEqual M M
 
 -- ---------- I/O ----------
 
+sayHello :: IO ()
 sayHello = do
   -- Prints the string with a new line
   putStrLn "What's your name: "
@@ -568,7 +569,7 @@ sayHello = do
   -- Gets user input and stores it in name
   name <- getLine
   
-  -- $ is used instead of the parentheses
+  -- /$ is used instead of the parentheses
   putStrLn $ "Hello " ++ name
   
 -- File IO
